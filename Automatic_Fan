@@ -1,0 +1,28 @@
+#include <dht.h>
+dht DHT;
+#define DHT11_PIN 2
+int motorPin1 = 6;
+int motorPin2 = 7;
+
+void setup() {
+    pinMode(motorPin1, OUTPUT);
+    pinMode(motorPin2, OUTPUT);
+    Serial.begin(9600);
+}
+
+void loop() {
+    int chk = DHT.read11(DHT11_PIN);
+    Serial.print("Temperature = ");
+    Serial.println(DHT.temperature);
+    Serial.print("Humidity = ");
+    Serial.println(DHT.humidity);
+    if(DHT.humidity>62){
+      digitalWrite(motorPin1, HIGH);
+      digitalWrite(motorPin2, LOW);
+    }
+    else{
+      digitalWrite(motorPin1, LOW);
+      digitalWrite(motorPin2, LOW);
+    }
+    delay(100);
+}
