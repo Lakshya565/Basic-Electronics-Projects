@@ -1,0 +1,106 @@
+#include <IRremote.hpp>
+int red=10;
+int blue=9;
+int green=5;
+int rb;
+int bb;
+int gb;
+float dim;
+int ir=6;
+String commander;
+void setup() {
+  Serial.begin(9600);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(blue, OUTPUT);
+  IrReceiver.begin(ir);
+}
+
+void loop() {
+  while(IrReceiver.decode()==0){
+  }
+  Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+  delay(500);
+  IrReceiver.resume();
+  if (IrReceiver.decodedIRData.decodedRawData==0xE916FF00){
+    commander="zero";
+    Serial.println(commander);
+    rb=255;
+    gb=255;
+    bb=255;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xF30CFF00){
+    commander="one";
+    Serial.println(commander);
+    rb=255;
+    gb=0;
+    bb=0;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xE718FF00){
+    commander="two";
+    Serial.println(commander);
+    rb=0;
+    gb=255;
+    bb=0;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xA15EFF00){
+    commander="three";
+    Serial.println(commander);
+    rb=0;
+    gb=0;
+    bb=255;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xF708FF00){
+    commander="four";
+    Serial.println(commander);
+    rb=255;
+    gb=255;
+    bb=0;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xE31CFF00){
+    commander="five";
+    Serial.println(commander);
+    rb=0;
+    gb=255;
+    bb=255;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xA55AFF00){
+    commander="six";
+    Serial.println(commander);
+    rb=255;
+    gb=0;
+    bb=255;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xBA45FF00){
+    commander="power";
+    Serial.println(commander);
+    rb=255;
+    gb=255;
+    bb=255;
+    dim=1;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xB946FF00){
+    commander="vol+";
+    Serial.println(commander);
+    dim=dim*1.25;
+    if(dim>1){
+      dim=1;
+    }
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xF807FF00){
+    commander="down";
+    Serial.println(commander);
+    dim=dim*.75;
+  }
+  if (IrReceiver.decodedIRData.decodedRawData==0xB847FF00){
+    commander="funcstop";
+    Serial.println(commander);
+    rb=0;
+    gb=0;
+    bb=0;
+    dim=0;
+  }
+  analogWrite(red, rb*dim);
+  analogWrite(green, gb*dim);
+  analogWrite(blue, bb*dim);
+}
