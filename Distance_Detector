@@ -1,0 +1,44 @@
+int trigger=12;
+int echo=9;
+int traveltime;
+float inches;
+float centimeters;
+
+#include <LiquidCrystal.h>
+#include <IRremote.hpp>
+int rs = 11;
+int enable = 10;
+int d4 = 7;
+int d5 = 6;
+int d6 = 5;
+int d7 = 4;
+
+LiquidCrystal lcd(rs, enable, d4, d5, d6, d7);
+
+void setup() {
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+  lcd.begin(16,2);
+}
+
+void loop() {
+  digitalWrite(trigger, LOW);
+  delayMicroseconds(10);
+  digitalWrite(trigger, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigger, LOW);
+  traveltime = pulseIn(echo, HIGH);
+  delay(500);
+  inches = (traveltime)/148.511 - 0.165077;
+  centimeters = inches*2.54;
+  lcd.setCursor(0,0);
+  lcd.print("~~~~");
+  lcd.print(inches);
+  lcd.print(" in~~~~~~");
+  lcd.setCursor(0,1);
+  lcd.print("~~~~");
+  lcd.print(centimeters);
+  lcd.println(" cm~~~~~~~");
+}
+
+  
