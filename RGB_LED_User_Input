@@ -1,0 +1,80 @@
+/*
+
+*/
+String color;
+String msg="Choose a number from 1-9";
+String msg2="You chose ";
+String msg3="Please choose a number from 1-9!";
+int red=6;
+int green=5;
+int blue=3;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(red, OUTPUT);
+  pinMode(green, OUTPUT);
+  pinMode(blue, OUTPUT);
+}
+
+void loop() {
+  Serial.println(msg);
+  while (Serial.available()==0){
+    
+  }
+  color=Serial.readString();
+  Serial.print(msg2);
+  Serial.print(color);
+  
+  if(color.equals("1\n")){//purple
+    analogWrite(red, 75);
+    analogWrite(green, 0);
+    analogWrite(blue, 130);
+  }
+  else if(color=="2\n"){//orange
+    analogWrite(red, 255);
+    analogWrite(green, 40);
+    analogWrite(blue, 0);
+  }
+  else if(color=="3\n"){//aqua
+    analogWrite(red, 0);
+    analogWrite(green, 255);
+    analogWrite(blue, 255);
+  }
+  else if(color=="4\n"){//green
+    analogWrite(red, 0);
+    analogWrite(green, 255);
+    analogWrite(blue, 0);
+  }
+  else if(color=="5\n"){//blue
+    analogWrite(red, 0);
+    analogWrite(green, 0);
+    analogWrite(blue, 255);
+  }
+  else if(color=="6\n"){//pink
+    analogWrite(red, 255);
+    analogWrite(green, 0);
+    analogWrite(blue, 200);
+  }
+  else if(color=="7\n"){//yellow
+    analogWrite(red, 255);
+    analogWrite(green, 150);
+    analogWrite(blue, 10);
+  }
+  else if(color=="8\n"){//red
+    analogWrite(red, 255);
+    analogWrite(green, 0);
+    analogWrite(blue, 0);
+  }
+  else if(color=="9\n"){//white
+    analogWrite(red, 255);
+    analogWrite(green, 255);
+    analogWrite(blue, 255);
+  }
+  else{
+    Serial.println(msg3);
+    digitalWrite(red, LOW);
+    digitalWrite(green, LOW);
+    digitalWrite(blue, LOW);
+  }
+}
+
