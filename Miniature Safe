@@ -1,0 +1,24 @@
+int buzz = 10;
+int tilt = 11; 
+int tiltValue = 0;
+
+void setup() 
+{            
+  pinMode(buzz, OUTPUT);
+  pinMode(tilt, INPUT);  
+  Serial.begin(9600);
+}
+
+void loop() 
+{
+  digitalWrite(tilt, HIGH);
+  tiltValue = digitalRead(tilt);   // reads the value at a digital input 
+  Serial.println(tiltValue);
+  if(tiltValue == 0){
+    analogWrite(buzz, 5);
+  }
+  else{
+    digitalWrite(buzz, LOW);
+  }
+  delay(100);
+}
